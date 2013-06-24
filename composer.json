@@ -1,0 +1,18 @@
+{
+    "name":        "Pipe",
+    "license":     "MIT",
+    "type":        "project",
+    "description": "Reading/Handling standard input (stdin)",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        "php":                          ">=5.3.3",
+        "symfony/config":               "2.3.*",
+        "symfony/dependency-injection": "2.3.*",
+        "symfony/yaml":                 "2.3.*",
+        "symfony/event-dispatcher":     "2.3.*",
+        "symfony/finder":               "2.3.*",
+        "symfony/class-loader":         "2.3.*"
+    }
+}

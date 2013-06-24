@@ -1,0 +1,9 @@
+logfile:
+    class: "LogfileBundle\\Listener\\LogfileListener"
+    tags:
+      - { event: "input", method: "input", priority: 1 }
+
+zabbix:
+    class: "ZabbixBundle\\Listener\\ZabbixListener"
+    tags:
+      - { event: "input", method: "input", priority: 2 }

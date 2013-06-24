@@ -1,0 +1,54 @@
+debug: false
+
+console:
+    options:
+        help:
+            command:     ["help", "h"]   # ["longname", "shortname"]
+            argument:    false
+            description: "show help"     # description of command (displayed for help)
+            required:    false           # optional
+
+        logfile:
+            command:     ["logfile", "f"]
+            argument:    string          # checks type
+            description: "logfile with sprintf-formatstring (see: http://php.net/manual/de/function.strftime.php)"
+            config:      logfile.file    # config key, sets/replaces value
+            required:    true
+
+        symlink:
+            command:     ["symlink", "s"]
+            argument:    string
+            description: "symlink location"
+            config:      logfile.symlink
+            required:    false
+
+        cycle:
+            command:     ["cycle"]
+            type:        integer
+            description: "how often to trigger a monitoring notification"
+            config:      zabbix.cycle
+            required:    false
+
+        rotation:
+            command:     ["precise-rotation"]
+            description: "enable precise logfile rotation (check for rotation condition at every logline)"
+
+        parser:
+            command:     ["parser"]
+            description: "ApacheAccesslog : parse ncsa/apache access logs"
+            type:        string
+
+        debug:
+            command:     ["debug"]
+            description: "debug output"
+            argument:    false
+            config:      debug
+
+
+logfile:
+    file:     "rz_access_log.%Y%m%d"
+    symlink:  "rz_access_log-current" # string | false
+    rotation: "precise"
+
+zabbix:
+    cycle:    3
