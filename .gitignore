@@ -1,5 +1,6 @@
 /.idea
 
+/composer/
 /composer.lock
 /bin/*
 /vendor/*
