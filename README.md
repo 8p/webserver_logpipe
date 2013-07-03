@@ -16,7 +16,11 @@ Features
 Compile and Install
 -------------------
 
-* Run composer  (http://getcomposer.org) to install necessary libraries:
+* Get composer  (http://getcomposer.org)
+  mkdir composer
+  curl -sS https://getcomposer.org/installer | php -- --install-dir=$PWD/composer
+* Run composer to install necessary libraries:
+  composer/composer.phar install
   composer install
 * Create php archive (phar)
   php app/create-phar.php
