@@ -20,5 +20,6 @@ $stdIn = fopen('php://stdin', 'r');
 ob_implicit_flush(true);
 
 while($line = fgets($stdIn)) :
+
     $controller->handleAction($line);
 endwhile;

@@ -11,8 +11,14 @@ class MainController extends BasicController {
         // register listeners
         $eventHandler = $this->get('event.handler');
         $eventHandler->registerListeners();
-    }
+    } // end: __construct()
 
+    /**
+     * Handle input
+     *
+     * @param  string $input
+     * @return void
+     */
     public function handleAction($input) {
 
         if(!$input) :
@@ -25,5 +31,5 @@ class MainController extends BasicController {
 
         $eventHandler = $this->get('event.handler');
         $eventHandler->dispatch('input', $event);
-    }
-}
+    } // end: handleAction()
+} // end: MainController

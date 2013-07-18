@@ -15,8 +15,13 @@ class ServiceContainer {
         $this->container->setParameter('root.dir', realpath(__DIR__ . '/../../..'));
 
         $this->registerServices();
-    }
+    } // end: __construct()
 
+    /**
+     * Get instance (singleton)
+     *
+     * @return ServiceContainer
+     */
     public static function getInstance() {
 
         if(!self::$instance) :
@@ -25,8 +30,13 @@ class ServiceContainer {
         endif;
 
         return self::$instance;
-    }
+    } // end: getInstance()
 
+    /**
+     * Register services
+     *
+     * @return void
+     */
     protected function registerServices() {
 
         $services = Yaml::parse(__DIR__ . '/../../../app/config/services.yml');
@@ -46,10 +56,16 @@ class ServiceContainer {
                 endforeach;
             endif;
         endforeach;
-    }
+    } // end: registerServices()
 
+    /**
+     * Get service
+     *
+     * @param  string $service
+     * @return object
+     */
     public function get($service) {
 
         return $this->container->get($service);
-    }
-}
+    } // end: get()
+} // end: ServiceContainer
