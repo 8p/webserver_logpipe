@@ -10,15 +10,15 @@ $loader = require_once __DIR__ . '/app/bootstrap.php';
 $resolver = new \MainBundle\Console\OptionResolver();
 $resolver->run();
 
-$controller = new \MainBundle\Controller\MainController();
-
-
 // create stream for STDIN
 $stdIn = fopen('php://stdin', 'r');
 
 // TODO: use buffered output
 ob_implicit_flush(true);
 
+$controller = new \MainBundle\Controller\MainController();
+
 while($line = fgets($stdIn)) :
+
     $controller->handleAction($line);
 endwhile;

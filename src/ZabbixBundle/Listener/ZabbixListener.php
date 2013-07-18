@@ -19,15 +19,18 @@ class ZabbixListener extends \MainBundle\Listener\BasicListener {
 
     public function input(\Symfony\Component\EventDispatcher\Event $event) {
 
-        $input = $event->getInput();
+        $pheanstalk = new \Pheanstalk_Pheanstalk('127.0.0.1');
+
+        $pheanstalk->useTube('testtube')
+                   ->put("job payload goes here\n");
+
+        // @todo implement error parser (warning , error counter), create keys with values
+        $parser = $this->get('logfile.parser');
 
         // zabbix logging
         $monitor = new \ZabbixBundle\Monitoring\Monitoring();
-        $monitor->add($input);
-    }
-
-
-
+        $monitor->add($parser->getResults());
+    } // end: input()
 
     public function triggerMonitorNotify(){
 
@@ -57,4 +60,4 @@ class ZabbixListener extends \MainBundle\Listener\BasicListener {
         # Activate signal handler
         //pcntl_alarm($this->cycle_seconds);
     }
-}
+} // end: ZabbixListener

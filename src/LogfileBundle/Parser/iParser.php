@@ -9,4 +9,4 @@ interface iParser {
     public function parseLine($line);
 
     public function getResults();
-}
+} // end: iParser

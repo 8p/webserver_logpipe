@@ -59,7 +59,7 @@ class OptionResolver {
         endforeach;
 
         $arguments = getopt($short, $long);
-var_dump($arguments);
+
         if(isset($arguments['help']) || isset($arguments['h'])) :
 
             echo $this->help($options);

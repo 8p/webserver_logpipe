@@ -13,4 +13,4 @@ event.input_event:
     class:     "MainBundle\\Event\\InputEvent"
 
 logfile.parser:
-    class:     "LogfileBundle\\Parser\\ApacheAccesslog"
+    class:     "LogfileBundle\\Parser\\ApacheAccessLog"

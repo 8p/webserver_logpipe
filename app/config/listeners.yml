@@ -3,7 +3,8 @@ logfile:
     tags:
       - { event: "input", method: "input", priority: 1 }
 
+# event "logged" is fired by logfile
 zabbix:
     class: "ZabbixBundle\\Listener\\ZabbixListener"
     tags:
-      - { event: "input", method: "input", priority: 2 }
+      - { event: "logged", method: "input", priority: 2 }

@@ -183,9 +183,9 @@ class ZabbixAdapter {
      *
      * @author Florian Preusner <florian.preusner@dmc.de>
      * @param  array $data
-     * @return void
+     * @return array $return
      */
-    protected function parseReceivedData($data) {
+    protected function parseReceivedData(array $data) {
 
         // use only json in received data
         $data = substr($data, strpos($data, '{'));

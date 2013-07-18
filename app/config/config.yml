@@ -35,7 +35,7 @@ console:
 
         parser:
             command:     ["parser"]
-            description: "ApacheAccesslog : parse ncsa/apache access logs"
+            description: "ApacheErrorLog: parse ncsa/apache access logs"
             type:        string
 
         debug:

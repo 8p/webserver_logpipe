@@ -5,14 +5,11 @@ namespace LogfileBundle\Listener;
 class LogfileListener extends \MainBundle\Listener\BasicListener {
 
     private $format;
-    private $logfile_name_current = NULL;
-    private $logfile_handle = NULL;
-    private $symlink = NULL;
-
-    private $notifiers = array();
-
-
-    private $precicseRotation = FALSE;
+    private $logfileNameCurrent = null;
+    private $logfileHandle      = null;
+    private $symlink            = null;
+    private $notifiers          = array();
+    private $precicseRotation   = false;
 
     public function __construct() {
 
@@ -26,73 +23,78 @@ class LogfileListener extends \MainBundle\Listener\BasicListener {
 
         # Initial open
         $this->maintainLogfile();
-    }
+    } // end: __construct()
 
     public function input(\Symfony\Component\EventDispatcher\Event $event) {
 
         $input = $event->getInput();
 
-        fwrite($this->logfile_handle, $input);
+        fwrite($this->logfileHandle, $input);
 
         $parser = $this->get('logfile.parser');
         $parser->parseLine($input);
 
-        if('precise' == $this->get('config')->get('logfile.rotation')){
-die('YEAH!');
+        if('precise' == $this->get('config')->get('logfile.rotation')) :
+
             $this->maintainLogfile();
-        }
-    }
+        endif;
+
+        // fire event (useful for monitoring)
+        $eventHandler = $this->get('event.handler');
+        $eventHandler->dispatch('logged');
+    } // end: input()
 
     /*public function addMonitorNotifier($monitor){
 
         array_push($this->notifiers,$monitor);
     }*/
 
-    public function setPrecicseRotation($setprecicserotation){
+    /**
+     * Set precise rotation
+     *
+     * @param  boolean $value
+     * @return void
+     */
+    public function setPrecicseRotation($value){
 
-        $this->precicseRotation = $setprecicserotation;
-    }
+        $this->precicseRotation = $value;
+    } // end: setPrecicseRotation()
 
     private function maintainSymlink($logfile_name){
 
-        if($this->symlink === NULL){
+        if($this->symlink === NULL) :
 
             return;
-        }
+        endif;
 
-        if(file_exists($this->symlink) && is_link($this->symlink)){
+        if(file_exists($this->symlink) && is_link($this->symlink)) :
 
             unlink($this->symlink);
-        }
+        endif;
 
         symlink($logfile_name, $this->symlink);
-    }
+    } // end: maintainSymlink()
 
     private function maintainLogfile(){
 
-        $tmp_logfilename = strftime($this->format);
+        $tmpLogfileName = strftime($this->format);
 
-        if($this->logfile_handle === NULL) {
+        if($this->logfileHandle && $this->logfileNameCurrent != $tmpLogfileName) :
 
-            $this->get('logger')->add(sprintf('OPEN %s', $tmp_logfilename));
-
-            $this->logfile_name_current = $tmp_logfilename;
-            $this->logfile_handle = fopen($tmp_logfilename, 'a');
-
-            $this->maintainSymlink($tmp_logfilename);
-        } else if ($this->logfile_name_current != $tmp_logfilename) {
-
-            $this->get('logger')->add(sprintf('CHANGE %s => %s', $this->logfile_name_current, $tmp_logfilename));
+            $this->get('logger')->add(sprintf('CHANGE %s => %s', $this->logfileNameCurrent, $tmpLogfileName));
 
             # Close old filehandle
-            fclose($this->logfile_handle);
-            # Open new filehandle
-            $this->logfile_name_current = $tmp_logfilename;
-            $this->logfile_handle = fopen($tmp_logfilename, 'a');
+            fclose($this->logfileHandle);
+        endif;
 
-            $this->maintainSymlink($tmp_logfilename);
-        }
+        $this->get('logger')->add(sprintf('OPEN %s', $tmpLogfileName));
 
-        return $this->logfile_handle;
-    }
-}
+        # Open new filehandle
+        $this->logfileNameCurrent = $tmpLogfileName;
+        $this->logfileHandle      = fopen($tmpLogfileName, 'a');
+
+        $this->maintainSymlink($tmpLogfileName);
+
+        return $this->logfileHandle;
+    } // end: maintainLogfile()
+} // end: LogfileListener

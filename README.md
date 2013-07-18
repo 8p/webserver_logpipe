@@ -84,7 +84,7 @@ Licence and Authors
 
 Additional authors are very welcome - just submit your patches as pull requests.
 
- * Florian Preusner <florian.preusner@dmc.de>
+ * Florian Preusner <florian@preusner.de>
  * Marc Schoechlin <marc.schoechlin@dmc.de>
 
 License - see: LICENSE
