@@ -2,31 +2,42 @@
 
 namespace ZabbixBundle\Monitoring;
 
+use       \MainBundle\Container\ServiceContainer;
+
 class Monitoring {
 
     protected $data = array();
-    protected $start;
-    protected $wait = 0; // seconds, sum input for transmitting
+    protected $container;
+    protected $config;
 
     public function __construct() {
 
-        $this->start = 0;
-    }
+        $this->container = ServiceContainer::getInstance();
+        $this->config    = $this->container->get('config');
+    } // end: __construct()
 
     public function add(array $input) {
 
         foreach($input as $key => $value) :
 
-            $this->setData($key, $value);
+            $this->set($key, $value);
         endforeach;
 
-        //@todo add to message queue?
-    }
+        $queue = $this->container->get('queue');
+        $queue->add('zabbix', $this->getData());
+    } // end: add()
 
-    protected function push($data, $host) {
+    public function push() {
 
         $adapter = new ZabbixAdapter();
-        print_r($adapter->send($data, $host));
+        $adapter->setServer(            $this->config->get('zabbix.server.host'))
+                ->setPort(              $this->config->get('zabbix.server.port'))
+                ->setTimeoutConnection( $this->config->get('zabbix.server.timeout.connection'))
+                ->setTimeoutStream(     $this->config->get('zabbix.server.timeout.stream'));
+
+        $result = $adapter->send($this->getData(), $this->config->get('zabbix.host'));
+
+        // @todo: have a look on result, escalate?
     } // end: push()
 
     public function getData() {
@@ -34,7 +45,12 @@ class Monitoring {
         return $this->data;
     } // end: getData()
 
-    public function setData($key, $value) {
+    public function setData(array $data) {
+
+        $this->data = $data;
+    } // end: setData()
+
+    public function set($key, $value) {
 
         $data = $this->getData();
 
@@ -51,9 +67,4 @@ class Monitoring {
 
         $this->data = $data;
     } // end: setData()
-
-    public function getHost() {
-
-        return 'api-myhb-v01.dmc-dev-vm-v3.intra.dmc.de';
-    } // end: getHost()
 } // end: Monitoring

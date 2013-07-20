@@ -4,7 +4,7 @@ namespace ZabbixBundle\Monitoring;
 
 class ZabbixAdapter {
 
-    protected $server            = 'zabbixtest.intra.dmc.de';
+    protected $server            = 'monitoring.domain.tld';
     protected $port              = 10051;
     protected $timeoutConnection = 2; // seconds
     protected $timeoutStream     = 5; // seconds
@@ -12,7 +12,6 @@ class ZabbixAdapter {
     /**
      * Set server
      *
-     * @author Florian Preusner <florian.preusner@dmc.de>
      * @param  string $value
      * @return self
      */
@@ -23,6 +22,12 @@ class ZabbixAdapter {
         return $this;
     } // end: setServer()
 
+    /**
+     * Set port
+     *
+     * @param  integer $value
+     * @return self
+     */
     public function setPort($value) {
 
         $this->port = $value;
@@ -30,6 +35,12 @@ class ZabbixAdapter {
         return $this;
     } // end: setPort()
 
+    /**
+     * Set timeout connection in seconds
+     *
+     * @param  integer $value
+     * @return self
+     */
     public function setTimeoutConnection($value) {
 
         $this->timeoutConnection = $value;
@@ -37,6 +48,12 @@ class ZabbixAdapter {
         return $this;
     } // end: setTimeoutConnection()
 
+    /**
+     * Set timeout stream in seconds
+     *
+     * @param  integer $value
+     * @return self
+     */
     public function setTimeoutStream($value) {
 
         $this->timeoutStream = $value;
@@ -45,17 +62,18 @@ class ZabbixAdapter {
     } // end: setTimeoutStream()
 
     /**
-     * Search for zabbix configuration and parse it
+     * Search for Zabbix configuration and parse it
      *
      * @author Florian Preusner <florian.preusner@dmc.de>
      * @param  string $file    path and name of config file
      * @return array  $config
+     * @throws \Exception
      */
     public function getDefaultConfig($file = '/var/zabbix/zabbix-agentd.conf') {
 
         if(!is_file($file)) {
 
-            throw new Exception("Zabbix standard configuration not found ($file)");
+            throw new \Exception(sprintf('Zabbix standard configuration not found (%s)', $file));
         }
 
         $config = array();
@@ -105,18 +123,18 @@ class ZabbixAdapter {
      *
      * @author Florian Preusner <florian.preusner@dmc.de>
      * @param  array  $data  array('key' => ?, 'value' => ?, 'time' => unixtimestamp)
-     * @param  string $host  zabix host
+     * @param  string $host  zabbix host
      * @return string
      */
     public function send(array $data, $host) {
 
         $data2push = array();
 
-        foreach($data as $entry) {
+        foreach($data as $key => $entry) {
 
             $data2push[] = array(
                 'host'  => $host,
-                'key'   => $entry['key'],
+                'key'   => $key,
                 'value' => (string) $entry['value'],
                 'clock' => $entry['time']
             );
@@ -134,8 +152,11 @@ class ZabbixAdapter {
     /**
      * Push data to Zabbix
      *
+     * @todo if server is not reachable, it takes 5min and no exception will be thrown?!
+     *
      * @author Florian Preusner <florian.preusner@dmc.de>
-     * @return void
+     * @return array $return
+     * @throws \Exception
      */
     protected function push() {
 
@@ -151,29 +172,34 @@ class ZabbixAdapter {
          */
         $fp = fsockopen($this->server, $this->port, $errno, $errstr, $this->timeoutConnection);
 
-        if(!$fp) {
+        if(!$fp) :
 
-            throw new Exception("Connecting (" . Config::get('monitoring.server') . ":" . Config::get('monitoring.server') . "): $errstr ($errno)");
-        } else {
+            throw new \Exception(sprintf('connecting (%s:%s): %s (%s)', $this->server, $this->port, $errstr, $errno));
+        endif;
 
-            if(!fwrite($fp, $dataSend)) {
+        if(!fwrite($fp, $dataSend)) {
 
-                throw new Exception('can\'t send data, shutting down.');
-            }
+            throw new \Exception('can\'t send data, shutting down.');
+        }
 
-            stream_set_timeout($fp, $this->timeoutStream);
+        stream_set_timeout($fp, $this->timeoutStream);
 
-            $receiving = '';
+        $receiving = '';
 
-            while(!feof($fp)) {
+        while(!feof($fp)) {
 
-                $receiving .= fgets($fp, 128);
-            }
+            $receiving .= fgets($fp, 128);
+        }
 
-            $return = $this->parseReceivedData($receiving);
+        if(!$receiving) :
 
             fclose($fp);
-        } // endif
+            throw new \Exception(sprintf('no data received (%s:%s)', $this->server, $this->port));
+        endif;
+
+        $return = $this->parseReceivedData($receiving);
+
+        fclose($fp);
 
         return $return;
     } // end: push()
@@ -181,11 +207,11 @@ class ZabbixAdapter {
     /**
      * Parse data
      *
-     * @author Florian Preusner <florian.preusner@dmc.de>
-     * @param  array $data
+     * @param  string $data
      * @return array $return
+     * @throws \Exception
      */
-    protected function parseReceivedData(array $data) {
+    protected function parseReceivedData($data) {
 
         // use only json in received data
         $data = substr($data, strpos($data, '{'));
@@ -193,7 +219,7 @@ class ZabbixAdapter {
 
         if($data->response != 'success') {
 
-            throw new Exception('Push failed: ' . print_r($data, true));
+            throw new \Exception('Push failed: ' . print_r($data, true));
         }
 
         # example for $data->info: Processed 2 Failed 0 Total 2 Seconds spent 0.000529

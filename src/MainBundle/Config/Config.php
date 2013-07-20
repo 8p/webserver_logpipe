@@ -133,7 +133,6 @@ class Config {
      * array(level1 => array(level2 => value))
      * $attr = level1.level2
      *
-     * @access public
      * @author Florian Preusner <florian.preusner@dmc.de>
      * @return string $value
      */

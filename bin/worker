@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+
+<?php
+
+$loader = require_once __DIR__ . '/../app/bootstrap.php';
+
+$worker = new \ZabbixBundle\Worker\QueueWorker();//@todo read by config, add param
+$worker->run();

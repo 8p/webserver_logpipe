@@ -8,7 +8,6 @@ class LogfileListener extends \MainBundle\Listener\BasicListener {
     private $logfileNameCurrent = null;
     private $logfileHandle      = null;
     private $symlink            = null;
-    private $notifiers          = array();
     private $precicseRotation   = false;
 
     public function __construct() {
@@ -43,11 +42,6 @@ class LogfileListener extends \MainBundle\Listener\BasicListener {
         $eventHandler = $this->get('event.handler');
         $eventHandler->dispatch('logged');
     } // end: input()
-
-    /*public function addMonitorNotifier($monitor){
-
-        array_push($this->notifiers,$monitor);
-    }*/
 
     /**
      * Set precise rotation

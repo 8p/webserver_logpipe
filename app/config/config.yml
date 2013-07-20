@@ -29,6 +29,13 @@ console:
             config:      zabbix.cycle
             required:    false
 
+        host:
+            command:     ["host"]
+            type:        string
+            description: "host to be monitored, monitoring data will be send to given host"
+            config:      zabbix.host
+            required:    false
+
         rotation:
             command:     ["precise-rotation"]
             description: "enable precise logfile rotation (check for rotation condition at every logline)"
@@ -51,4 +58,12 @@ logfile:
     rotation: "precise"
 
 zabbix:
-    cycle:    3
+    server:
+        host: "monitoring.dmc.de"
+        port: 10051
+        timeout:
+            connection: 2 # seconds
+            stream:     5 # seconds
+
+    host:     "dmc.de"
+    cycle:    5 # minutes

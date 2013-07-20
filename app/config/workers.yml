@@ -1,0 +1,2 @@
+zabbix:
+    class: "ZabbixBundle\\Worker\\QueueWorker"
