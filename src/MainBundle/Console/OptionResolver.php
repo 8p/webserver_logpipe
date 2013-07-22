@@ -44,7 +44,7 @@ class OptionResolver {
                 // "::" => optional value
                 $value = ':';
             endif;
-
+            $value = ':';
             if(isset($option['required']) && $option['required']) :
 
                 $required[] = $name;
@@ -79,8 +79,8 @@ class OptionResolver {
 
         foreach($options as $name => $option) :
 
-            $active   = false;
-            $value = false;
+            $active = false;
+            $value  = false;
 
             if(isset($option['command'][1]) && array_key_exists($option['command'][1], $arguments)) :
 
@@ -96,7 +96,7 @@ class OptionResolver {
                 $value = $arguments[$option['command'][0]];
             endif;
 
-            $config  = $this->container->get('config');
+            $config = $this->container->get('config');
 
             if(isset($option['config']) && ($key = $option['config'])) :
 
@@ -105,7 +105,7 @@ class OptionResolver {
                 $config->set($key, $value);
             endif;
         endforeach;
-    }
+    } // end: run()
 
     /**
      * Help
@@ -173,8 +173,6 @@ class OptionResolver {
 
             $prefix .= ':';
 
-
-            //-c or --concurrency (integer):   concurrency (threads)
             $arguments[] = str_pad($prefix, 30, ' ') . $option['description'];
         endforeach;
 

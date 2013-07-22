@@ -35,8 +35,14 @@ class MainController extends BasicController {
         $event = $this->get('event.input_event');
         $event->setInput($input);
 
-        $eventHandler = $this->get('event.handler');
-        $eventHandler->dispatch('input', $event);
+        try {
+
+            $eventHandler = $this->get('event.handler');
+            $eventHandler->dispatch('input', $event);
+        } catch(\Exception $e) {
+
+            $this->handleError($e);
+        }
     } // end: handleAction()
 
     /**
@@ -48,12 +54,27 @@ class MainController extends BasicController {
 
         if(time() >= $this->next) :
 
-            echo sprintf('(%s) TIME TO SEND', date('Y-m-d H:i:s')) . PHP_EOL;
+            echo sprintf('(%s) TIME TO SEND', date('Y-m-d H:i:s')) . PHP_EOL;//@todo
 
-            $eventHandler = $this->get('event.handler');
-            $eventHandler->dispatch('cycle');
+            try {
+
+                $eventHandler = $this->get('event.handler');
+                $eventHandler->dispatch('cycle');
+            } catch(\Exception $e) {
+
+                $this->handleError($e);
+            }
 
             $this->next = time() + $this->cycle;
         endif;
     } // end: cycleAction()
+
+    private function handleError(\Exception $e) {
+
+        $handle  = fopen('php://stderr', 'w');
+        $message = sprintf('Apache Logpipe Error (#%s) in %s line %d: %s', $e->getFile(), $e->getLine(), $e->getCode(), $e->getMessage());
+
+        fwrite($handle, $message . PHP_EOL);
+        fclose($handle);
+    } // end: handleError()
 } // end: MainController

@@ -24,14 +24,14 @@ console:
 
         cycle:
             command:     ["cycle"]
-            type:        integer
+            argument:    integer
             description: "how often to trigger a monitoring notification"
             config:      cycle
             required:    false
 
         host:
             command:     ["host"]
-            type:        string
+            argument:    string
             description: "host to be monitored, monitoring data will be send to given host"
             config:      zabbix.host
             required:    false
@@ -43,7 +43,7 @@ console:
         parser:
             command:     ["parser"]
             description: "ApacheErrorLog: parse ncsa/apache access logs"
-            type:        string
+            argument:    string
 
         debug:
             command:     ["debug"]

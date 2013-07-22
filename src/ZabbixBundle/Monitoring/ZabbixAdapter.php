@@ -188,7 +188,7 @@ class ZabbixAdapter {
         /*
          * Socket
          */
-        $fp = fsockopen($this->server, $this->port, $errno, $errstr, $this->timeoutConnection);
+        $fp = @fsockopen($this->server, $this->port, $errno, $errstr, $this->timeoutConnection);
 
         if(!$fp) :
 

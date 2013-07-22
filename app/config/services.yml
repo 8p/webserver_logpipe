@@ -4,7 +4,6 @@ config:
 
 stream:
     class:     "MainBundle\\Stream\\StdIn"
-    arguments: [%config%]
 
 logger:
     class:     "MainBundle\\Log\\Logger"

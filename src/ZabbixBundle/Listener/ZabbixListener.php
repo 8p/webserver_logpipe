@@ -33,6 +33,8 @@ class ZabbixListener extends \MainBundle\Listener\BasicListener {
             $monitor->addHeartbeat();
         endif;
 
-        $monitor->push();
+        $result = $monitor->push();
+
+        print_r($result);
     } // end: send()
 } // end: ZabbixListener

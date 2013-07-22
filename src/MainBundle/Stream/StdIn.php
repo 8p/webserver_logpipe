@@ -6,9 +6,10 @@ class StdIn {
 
     protected $cycle = 3; // timeout in seconds
 
-    public function __construct($config) {
+    public function __construct() {
 
-        $this->cycle = $config->get('cycle');
+        $this->container = \MainBundle\Container\ServiceContainer::getInstance();
+        $this->cycle     = $this->container->get('config')->get('cycle');
     } // end: __construct()
 
     public function read() {
