@@ -9,6 +9,7 @@ class QueueWorker {
     protected $sleep = 3;
     protected $queueService;
     protected $container;
+    protected $heartbeat = false;
 
     /**
      * Constructor
@@ -40,6 +41,42 @@ class QueueWorker {
     } // end: getSleep()
 
     /**
+     * Set heartbeat (true|false)
+     *
+     * @param boolean $value
+     */
+    public function setHeartbeat($value) {
+
+        $this->heartbeat = $value;
+    } // end: setHeartbeat()
+
+    /**
+     * Is heartbeat on?
+     *
+     * @return boolean
+     */
+    public function isHeartbeat() {
+
+        return $this->heartbeat;
+    } // end: isHeartbeat()
+
+    /**
+     * Add heartbeat to given data
+     *
+     * @param  array $data
+     * @return array
+     */
+    public function addHeartbeat(array $data = array()) {
+
+        $data['logpipe.heartbeat'] = array(
+            'value' => 1,
+            'time' => time()
+        );
+
+        return $data;
+    } // end: addHeartbeat()
+
+    /**
      * Run worker, run
      *
      * @return void
@@ -51,6 +88,11 @@ class QueueWorker {
             sleep($this->getSleep());
 
             $data = $this->queueService->getLatestData('zabbix');
+
+            if($this->isHeartbeat()) :
+
+                $data = $this->addHeartbeat($data);
+            endif;
 
             if($data) :
 

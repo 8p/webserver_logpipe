@@ -4,7 +4,7 @@
 
 if(count($argv) == 1) :
 
-    die(sprintf('Please specify a worker. For example: %s zabbix', $argv[0]) . PHP_EOL);
+    die(sprintf('Please specify a worker. For example: php %s zabbix', $argv[0]) . PHP_EOL);
 endif;
 
 $loader  = require_once __DIR__ . '/bootstrap.php';
@@ -20,9 +20,14 @@ endif;
 $worker  = $workers[$name];
 $service = new $worker['class'];
 
-if(isset($worker['cycle'])) :
+if(isset($worker['cycle']) && $cycle = $worker['cycle']) :
 
-    $service->setSleep($worker['cycle']);
+    $service->setSleep($cycle);
+endif;
+
+if(isset($worker['heartbeat']) && $worker['heartbeat']) :
+
+    $service->setHeartbeat(true);
 endif;
 
 $service->run();

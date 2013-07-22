@@ -67,6 +67,12 @@ class Pheanstalk extends AbstractQueue {
         return $job;
     } // end: getLastJob()
 
+    /**
+     * Get latest data by last job
+     *
+     * @param  string $container
+     * @return array
+     */
     public function getLatestData($container) {
 
         $job = $this->getLastJob($container);
@@ -76,6 +82,6 @@ class Pheanstalk extends AbstractQueue {
             return json_decode($job->getData(), true);
         endif;
 
-        return null;
+        return array();
     } // end: getLatestData()
 } // end: MessageQueue
