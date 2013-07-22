@@ -16,14 +16,14 @@ Features
 Compile and Install
 -------------------
 
-* Get composer  (http://getcomposer.org)
+* Get composer (http://getcomposer.org)
   mkdir composer
   curl -sS https://getcomposer.org/installer | php -- --install-dir=$PWD/composer
 * Run composer to install necessary libraries:
   composer/composer.phar install
   composer install
 * Create php archive (phar)
-  php app/create-phar.php
+  php app/create-phar
 * Run application (see examples)
 
 
@@ -64,8 +64,8 @@ Apache:
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" customlog_combined
 LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" customlog_proxy_combined
 
-ErrorLog "|/usr/bin/webserver_logpipe.php --logfile '/var/log/apache/rz_error_log.%Y%m%d' --symlink '/var/log/apache/rz_error_log-current' --cycle 30 --parser ApacheErrorlog
-CustomLog "|/usr/bin/webserver_logpipe.php --logfile '/var/log/apache/rz_access_log.%Y%m%d' --symlink '/var/log/apache/rz_access_log-current' --cycle 30 --parser ApacheAccesslog" customlog_combined
+ErrorLog    "|php /usr/bin/logpipe.phar --logfile '/var/log/apache/rz_error_log.%Y%m%d' --symlink '/var/log/apache/rz_error_log-current' --cycle 30 --parser ApacheErrorlog"
+TransferLog "|php /usr/bin/logpipe.phar --logfile '/var/log/apache/rz_access_log.%Y%m%d' --symlink '/var/log/apache/rz_access_log-current' --cycle 30 --parser ApacheAccesslog"
 ```
 
 Missing features
@@ -75,7 +75,7 @@ Missing features
 Testing
 ----------------
 ```
-testcode/simple_testcase.php|./webserver_logpipe.php --logfile "/tmp/rz_access_log.%Y%m%d" --symlink /tmp/rz_access_log-current --cycle 3 --debug --parser ApacheAccesslog
+php data/simple_testcase_accesslog.php | ./webserver_logpipe.php --logfile "/tmp/rz_access_log.%Y%m%d" --symlink /tmp/rz_access_log-current --cycle 3 --debug --parser ApacheAccesslog
 ```
 
 
@@ -94,10 +94,7 @@ Todo
  * Create unittests
  * Minimize resource usage by using "strace -c ./webserver_logpipe.php" and "time ./webserver_logpipe.php"
  * Add a logger to improve the possibilities to debug this tool
- * Add a manpage/help option
  * Fix Getopt, detect wrong parameters
- * Fix alarm handler implementation, trigger monitor reliable after timeout
-   (http://www.php.net/manual/en/function.pcntl-alarm.php)
  * Package tool as deb and rpm format
  * Implement php error log parsing
  * Improve reliability if a external monitoring inotification interface is not reachable

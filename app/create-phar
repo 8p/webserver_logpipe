@@ -4,7 +4,13 @@
 
 $stub       = 'webserver_logpipe.php';
 $projectDir = realpath(__DIR__ . '/..');
+$file       = sprintf('%s/bin/logpipe.phar', $projectDir);
 
-$phar = new Phar($projectDir . "/bin/logpipe.phar", FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, "logpipe.phar");
+if(file_exists($file)) :
+
+    unlink($file);
+endif;
+
+$phar = new Phar($file, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, 'logpipe.phar');
 $phar->buildFromDirectory($projectDir);
 $phar->setStub($phar->createDefaultStub($stub));
