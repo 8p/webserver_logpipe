@@ -26,7 +26,7 @@ console:
             command:     ["cycle"]
             type:        integer
             description: "how often to trigger a monitoring notification"
-            config:      zabbix.cycle
+            config:      cycle
             required:    false
 
         host:
@@ -51,6 +51,7 @@ console:
             argument:    false
             config:      debug
 
+cycle:  300 # 5min
 
 logfile:
     file:     "rz_access_log.%Y%m%d"
@@ -59,10 +60,11 @@ logfile:
 
 zabbix:
     server:
-        host: "monitoring.8points.de"
+        host: "monitoring.domain.tld"
         port: 10051
         timeout:
             connection: 2 # seconds
             stream:     5 # seconds
 
-    host:     "test"
+    host:      "test"
+    heartbeat: true

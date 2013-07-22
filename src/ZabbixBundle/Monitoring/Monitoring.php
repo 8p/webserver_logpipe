@@ -22,12 +22,15 @@ class Monitoring {
 
             $this->set($key, $value);
         endforeach;
-
-        $queue = $this->container->get('queue');
-        $queue->add('zabbix', $this->getData());
     } // end: add()
 
     public function push() {
+
+        if(!$this->getData()) :
+
+            echo 'no data to send' . PHP_EOL;
+            return false;
+        endif;
 
         $adapter = new ZabbixAdapter();
         $adapter->setServer(            $this->config->get('zabbix.server.host'))
@@ -48,11 +51,21 @@ class Monitoring {
         $this->data = $data;
     } // end: setData()
 
-    public function set($key, $value) {
+    /**
+     * Add heartbeat data
+     *
+     * @return void
+     */
+    public function addHeartbeat() {
+
+        $this->set('logpipe.heartbeat', 1, true);
+    } // end: addHeartbeat()
+
+    public function set($key, $value, $strict = false) {
 
         $data = $this->getData();
 
-        if(isset($data[$key])) :
+        if(isset($data[$key]) && !$strict) :
 
             $data[$key]['value'] += $value;
         else :

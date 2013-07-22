@@ -13,7 +13,6 @@
         "symfony/yaml":                 "2.3.*",
         "symfony/event-dispatcher":     "2.3.*",
         "symfony/finder":               "2.3.*",
-        "symfony/class-loader":         "2.3.*",
-        "pda/pheanstalk":               "dev-master"
+        "symfony/class-loader":         "2.3.*"
     }
 }

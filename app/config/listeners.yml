@@ -7,4 +7,10 @@ logfile:
 zabbix:
     class: "ZabbixBundle\\Listener\\ZabbixListener"
     tags:
-      - { event: "logged", method: "input", priority: 2 }
+      - { event: "logged", method: "input", priority: 1 }
+
+# event "cycle" is fired by stream
+zabbix_push:
+    class: "ZabbixBundle\\Listener\\ZabbixListener"
+    tags:
+      - { event: "cycle", method: "send", priority: 1 }

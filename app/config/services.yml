@@ -2,6 +2,10 @@ config:
     class:     "MainBundle\\Config\\Config"
     arguments: [%root.dir%/app/config/config.yml]
 
+stream:
+    class:     "MainBundle\\Stream\\StdIn"
+    arguments: [%config%]
+
 logger:
     class:     "MainBundle\\Log\\Logger"
     arguments: [%config%]
@@ -15,5 +19,5 @@ event.input_event:
 logfile.parser:
     class:     "LogfileBundle\\Parser\\ApacheAccessLog"
 
-queue:
-    class:     "MainBundle\\Queue\\Pheanstalk"
+monitoring:
+    class:     "ZabbixBundle\\Monitoring\\Monitoring"

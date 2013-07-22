@@ -4,9 +4,15 @@ namespace MainBundle\Controller;
 
 class MainController extends BasicController {
 
-    protected $start;
+    protected $cycle;
+    protected $next;
 
     public function __construct() {
+
+        $config = $this->get('config');
+
+        $this->cycle = $config->get('cycle');
+        $this->next  = time() + $this->cycle;
 
         // register listeners
         $eventHandler = $this->get('event.handler');
@@ -32,4 +38,22 @@ class MainController extends BasicController {
         $eventHandler = $this->get('event.handler');
         $eventHandler->dispatch('input', $event);
     } // end: handleAction()
+
+    /**
+     * Handle cycle, fire event
+     *
+     * @return void
+     */
+    public function cycleAction() {
+
+        if(time() >= $this->next) :
+
+            echo sprintf('(%s) TIME TO SEND', date('Y-m-d H:i:s')) . PHP_EOL;
+
+            $eventHandler = $this->get('event.handler');
+            $eventHandler->dispatch('cycle');
+
+            $this->next = time() + $this->cycle;
+        endif;
+    } // end: cycleAction()
 } // end: MainController
