@@ -1,2 +1,3 @@
 zabbix:
     class: "ZabbixBundle\\Worker\\QueueWorker"
+    cycle: 30 # seconds

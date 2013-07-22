@@ -27,8 +27,14 @@ class ZabbixAdapter {
      *
      * @param  integer $value
      * @return self
+     * @throws \Exception
      */
     public function setPort($value) {
+
+        if(!is_integer($value)) :
+
+            throw new \Exception(sprintf('zabbix port must be integer, given: %s', print_r($value, true)));
+        endif;
 
         $this->port = $value;
 
@@ -40,8 +46,14 @@ class ZabbixAdapter {
      *
      * @param  integer $value
      * @return self
+     * @throws \Exception
      */
     public function setTimeoutConnection($value) {
+
+        if(!is_integer($value)) :
+
+            throw new \Exception(sprintf('zabbix connection timeout must be integer, given: %s', print_r($value, true)));
+        endif;
 
         $this->timeoutConnection = $value;
 
@@ -53,8 +65,14 @@ class ZabbixAdapter {
      *
      * @param  integer $value
      * @return self
+     * @throws \Exception
      */
     public function setTimeoutStream($value) {
+
+        if(!is_integer($value)) :
+
+            throw new \Exception(sprintf('zabbix stream timeout must be integer, given: %s', print_r($value, true)));
+        endif;
 
         $this->timeoutStream = $value;
 

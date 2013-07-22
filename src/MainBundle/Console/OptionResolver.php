@@ -9,14 +9,14 @@ class OptionResolver {
     public function __construct() {
 
         $this->container = \MainBundle\Container\ServiceContainer::getInstance();
-    }
+    } // end: __construct()
 
     public function getOptions() {
 
         $config = $this->container->get('config');
 
-        return $config->get('console.options')->__toArray(); // @todo implement iterator
-    }
+        return $config->get('console.options');
+    } // end: getOptions()
 
     /**
      * @todo object oriented! creating Option class and GetOpt
@@ -187,5 +187,5 @@ class OptionResolver {
         $output[] = PHP_EOL;
 
         return implode(PHP_EOL, $output);
-    }
-}
+    } // end: help()
+} // end: OptionResolver

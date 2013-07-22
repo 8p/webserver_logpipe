@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+
+<?php
+
+if(count($argv) == 1) :
+
+    die(sprintf('Please specify a worker. For example: %s zabbix', $argv[0]) . PHP_EOL);
+endif;
+
+$loader  = require_once __DIR__ . '/bootstrap.php';
+$name    = $argv[1];
+$config  = realpath(__DIR__ . '/config/workers.yml');
+$workers = \Symfony\Component\Yaml\Yaml::parse($config);
+
+if(!isset($workers[$name])) :
+
+    die(sprintf('Given worker %s does not exist in file %s', $name, $config) . PHP_EOL);
+endif;
+
+$worker  = $workers[$name];
+$service = new $worker['class'];
+
+if(isset($worker['cycle'])) :
+
+    $service->setSleep($worker['cycle']);
+endif;
+
+$service->run();

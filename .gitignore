@@ -3,5 +3,6 @@
 /composer/
 /composer.lock
 /vendor/*
+/bin/*
 
 !.gitkeep

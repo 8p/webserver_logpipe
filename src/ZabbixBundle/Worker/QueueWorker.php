@@ -2,17 +2,21 @@
 
 namespace ZabbixBundle\Worker;
 
+use       \MainBundle\Container\ServiceContainer;
+
 class QueueWorker {
 
     protected $sleep = 3;
     protected $queueService;
+    protected $container;
 
     /**
      * Constructor
      */
     public function __construct() {
 
-        $this->queueService = new \MainBundle\Queue\Pheanstalk(); // @todo loading by config
+        $this->container    = ServiceContainer::getInstance();
+        $this->queueService = $this->container->get('queue');
     } // end: __construct()
 
     /**

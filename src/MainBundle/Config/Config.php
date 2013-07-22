@@ -133,7 +133,9 @@ class Config {
      * array(level1 => array(level2 => value))
      * $attr = level1.level2
      *
-     * @author Florian Preusner <florian.preusner@dmc.de>
+     * @param  string $attr
+     * @param  string $default
+     * @param  string $mode
      * @return string $value
      */
     public function get($attr, $default = null, $mode = self::MODE_NORMAL) {
@@ -149,7 +151,6 @@ class Config {
             }
 
             return $this->config[$attr];
-            //return new $this($this->config[$attr]);
         endif;
 
         /*
@@ -189,8 +190,7 @@ class Config {
             return $return;
         }
 
-        //return ($return !== null) ? $return : $default;
-        return ($return !== null) ? new $this($return) : $default;
+        return ($return !== null) ? $return : $default;
     } // end: get()
 
     public function __toString() {

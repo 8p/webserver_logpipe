@@ -35,9 +35,7 @@ class Monitoring {
                 ->setTimeoutConnection( $this->config->get('zabbix.server.timeout.connection'))
                 ->setTimeoutStream(     $this->config->get('zabbix.server.timeout.stream'));
 
-        $result = $adapter->send($this->getData(), $this->config->get('zabbix.host'));
-
-        // @todo: have a look on result, escalate?
+        return $adapter->send($this->getData(), $this->config->get('zabbix.host'));
     } // end: push()
 
     public function getData() {
