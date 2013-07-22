@@ -25,9 +25,13 @@ class ZabbixListener extends \MainBundle\Listener\BasicListener {
      */
     public function send(\Symfony\Component\EventDispatcher\Event $event) {
 
+        $config  = $this->get('config');
         $monitor = $this->get('monitoring');
 
-        // @todo heartbeat?
+        if($config->get('zabbix.heartbeat')) :
+
+            $monitor->addHeartbeat();
+        endif;
 
         $monitor->push();
     } // end: send()
