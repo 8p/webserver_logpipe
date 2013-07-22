@@ -97,4 +97,6 @@ Todo
  * Fix Getopt, detect wrong parameters
  * Package tool as deb and rpm format
  * Implement php error log parsing
- * Improve reliability if a external monitoring inotification interface is not reachable
+ * Logging should always work : Improve reliability if a external monitoring inotification interface is not reachable
+ * Commandline parameters should always have higher precedence
+ * Errors of the logpipe should be written to STDERR
