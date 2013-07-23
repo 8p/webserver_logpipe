@@ -32,8 +32,6 @@ class Monitoring {
             return false;
         endif;
 
-print_r($this->getData());
-
         $adapter = new ZabbixAdapter();
         $adapter->setServer(            $this->config->get('zabbix.server.host'))
                 ->setPort(              $this->config->get('zabbix.server.port'))

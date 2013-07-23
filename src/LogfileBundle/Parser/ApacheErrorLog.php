@@ -4,8 +4,8 @@ namespace LogfileBundle\Parser;
 
 class ApacheAccesslog implements iParser {
 
-    private $hits_unmatched = 0;
-    private $hits_total = 0;
+    //private $hitsUnmatched = 0;
+    //private $hitsTotal = 0;
 
 
     public function __construct(){
@@ -20,7 +20,7 @@ class ApacheAccesslog implements iParser {
 #         return;
 #       }
 #
-       $this->hits_total++; 
+       $this->hitsTotal++; 
     }
 
 

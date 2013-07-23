@@ -210,17 +210,9 @@ class Config {
         return $return;
     }
 
-    public function clear($only = null, $exclude = null) {
+    public function clear() {
 
-        if(!$exclude) {
-
-            $this->config = array();
-        }
-
-        if(isset($this->config[$exclude])) {
-
-            $this->config = array($exclude => $this->config[$exclude]);
-        }
+        $this->config = array();        
     } // end: clear()
 
     /**

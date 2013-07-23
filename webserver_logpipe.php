@@ -8,7 +8,11 @@ $loader = require_once __DIR__ . '/app/bootstrap.php';
 
 // Parse commandline options
 $resolver = new \MainBundle\Console\OptionResolver();
-$resolver->run();
+
+if(!$resolver->run()) :
+
+    return;
+endif;
 
 // TODO: use buffered output
 ob_implicit_flush(true);

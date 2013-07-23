@@ -44,7 +44,7 @@ class OptionResolver {
                 // "::" => optional value
                 $value = ':';
             endif;
-            $value = ':';
+
             if(isset($option['required']) && $option['required']) :
 
                 $required[] = $name;
@@ -63,7 +63,8 @@ class OptionResolver {
         if(isset($arguments['help']) || isset($arguments['h'])) :
 
             echo $this->help($options);
-            exit(1);
+            
+            return false;
         endif;
 
         foreach($required as $check) :
@@ -72,8 +73,7 @@ class OptionResolver {
 
             if(!in_array($check, $option['command'])) :
 
-                echo sprintf('argument %s missing, use "help" for more information', $check) . PHP_EOL;
-                exit(1);
+                throw new \Exception(sprintf('argument %s missing, use "help" for more information', $check));
             endif;
         endforeach;
 
@@ -105,6 +105,8 @@ class OptionResolver {
                 $config->set($key, $value);
             endif;
         endforeach;
+        
+        return true;
     } // end: run()
 
     /**

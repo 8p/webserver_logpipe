@@ -1,5 +1,5 @@
 {
-    "name":        "Pipe",
+    "name":        "apache-webserver-logpipe",
     "license":     "MIT",
     "type":        "project",
     "description": "Reading/Handling standard input (stdin)",
