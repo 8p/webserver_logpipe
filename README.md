@@ -1,4 +1,4 @@
-Apache Log Pipe
+Apache Log Pipe [![SensioLabsInsight](https://insight.sensiolabs.com/projects/441e0ac2-c887-4513-9f9a-56c4ae1c6c6e/small.png)](https://insight.sensiolabs.com/projects/441e0ac2-c887-4513-9f9a-56c4ae1c6c6e)
 =================
 
 A logpipe for webservers written in php
