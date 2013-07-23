@@ -32,6 +32,8 @@ class Monitoring {
             return false;
         endif;
 
+print_r($this->getData());
+
         $adapter = new ZabbixAdapter();
         $adapter->setServer(            $this->config->get('zabbix.server.host'))
                 ->setPort(              $this->config->get('zabbix.server.port'))
@@ -68,6 +70,7 @@ class Monitoring {
         if(isset($data[$key]) && !$strict) :
 
             $data[$key]['value'] += $value;
+            $data[$key]['time']   = time();
         else :
 
             $data[$key] = array(
