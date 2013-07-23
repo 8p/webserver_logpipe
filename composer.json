@@ -1,5 +1,5 @@
 {
-    "name":        "apache-webserver-logpipe",
+    "name":        "dmc/apache-webserver-logpipe",
     "license":     "MIT",
     "type":        "project",
     "description": "Reading/Handling standard input (stdin)",
