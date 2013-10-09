@@ -34,7 +34,7 @@ Features:
 ```
 $ ./webserver_logpipe.php
 
-http_extend [-?] 
+./webserver_logpipe.php [-?] 
 
   --help                    show help
   --logfile <fileformat>    logfile with sprintf-formatstring (see: http://php.net/manual/de/function.strftime.php)
