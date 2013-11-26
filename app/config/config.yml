@@ -11,7 +11,7 @@ console:
         logfile:
             command:     ["logfile", "f"]
             argument:    string          # checks type
-            description: "logfile with sprintf-formatstring (see: http://php.net/manual/de/function.strftime.php)"
+            description: "logfile with sprintf-formatstring (see: http://php.net/strftime)"
             config:      logfile.file    # config key, sets/replaces value
             required:    true
 
