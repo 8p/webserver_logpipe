@@ -99,3 +99,7 @@ Todo
  * Implement php error log parsing
  * Logging should always work : Improve reliability if a external monitoring inotification interface is not reachable
  * Commandline parameters should always have higher precedence
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/8p/webserver_logpipe/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
