@@ -37,7 +37,7 @@ $ ./webserver_logpipe.php
 ./webserver_logpipe.php [-?] 
 
   --help                    show help
-  --logfile <fileformat>    logfile with sprintf-formatstring (see: http://php.net/manual/de/function.strftime.php)
+  --logfile <fileformat>    logfile with sprintf-formatstring (see: http://php.net/strftime)
   --symlink <link>          symlink location
   --cycle <sec>             how often to trigger a monitoring notification
   --precise-rotation        enable precise logfile rotation (check for rotation condition at every logline)
