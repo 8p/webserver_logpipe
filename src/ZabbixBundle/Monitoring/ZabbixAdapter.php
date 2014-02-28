@@ -170,8 +170,6 @@ class ZabbixAdapter {
     /**
      * Push data to Zabbix
      *
-     * @todo if server is not reachable, it takes 5min and no exception will be thrown?!
-     *
      * @author Florian Preusner <florian.preusner@dmc.de>
      * @return array $return
      * @throws \Exception

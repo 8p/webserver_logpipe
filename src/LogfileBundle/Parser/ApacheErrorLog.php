@@ -16,7 +16,7 @@ class ApacheAccesslog implements iParser {
 
        if(preg_match($this->line_regex, $line, $matched) != 1){
          print "FAILED to PARSE LINE: $line";
-         $this->hits_unmatched++;
+         $this->hitsUnmatched++;
          return;
        }
 
