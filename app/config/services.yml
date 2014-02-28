@@ -1,22 +1,16 @@
 config:
     class:     "MainBundle\\Config\\Config"
     arguments: [%root.dir%/app/config/config.yml]
-
 stream:
     class:     "MainBundle\\Stream\\StdIn"
-
 logger:
     class:     "MainBundle\\Log\\Logger"
     arguments: [%config%]
-
 event.handler:
     class:     "MainBundle\\Event\\Handler"
-
 event.input_event:
     class:     "MainBundle\\Event\\InputEvent"
-
 logfile.parser:
     class:     "LogfileBundle\\Parser\\ApacheAccessLog"
-
 monitoring:
     class:     "ZabbixBundle\\Monitoring\\Monitoring"

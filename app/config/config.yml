@@ -1,5 +1,4 @@
 debug: false
-
 console:
     options:
         help:
@@ -50,14 +49,11 @@ console:
             description: "debug output"
             argument:    false
             config:      debug
-
 cycle:  300 # 5min
-
 logfile:
     file:     "rz_access_log.%Y%m%d"
     symlink:  "rz_access_log-current" # string | false
     rotation: "precise"
-
 zabbix:
     server:
         host: "monitoring.domain.tld"
