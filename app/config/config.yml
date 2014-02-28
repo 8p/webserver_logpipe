@@ -6,44 +6,37 @@ console:
             argument:    false
             description: "show help"     # description of command (displayed for help)
             required:    false           # optional
-
         logfile:
             command:     ["logfile", "f"]
             argument:    string          # checks type
             description: "logfile with sprintf-formatstring (see: http://php.net/strftime)"
             config:      logfile.file    # config key, sets/replaces value
             required:    true
-
         symlink:
             command:     ["symlink", "s"]
             argument:    string
             description: "symlink location"
             config:      logfile.symlink
             required:    false
-
         cycle:
             command:     ["cycle"]
             argument:    integer
             description: "how often to trigger a monitoring notification"
             config:      cycle
             required:    false
-
         host:
             command:     ["host"]
             argument:    string
             description: "host to be monitored, monitoring data will be send to given host"
             config:      zabbix.host
             required:    false
-
         rotation:
             command:     ["precise-rotation"]
             description: "enable precise logfile rotation (check for rotation condition at every logline)"
-
         parser:
             command:     ["parser"]
             description: "ApacheErrorLog: parse ncsa/apache access logs"
             argument:    string
-
         debug:
             command:     ["debug"]
             description: "debug output"
@@ -61,6 +54,5 @@ zabbix:
         timeout:
             connection: 2 # seconds
             stream:     5 # seconds
-
     host:      "test"
     heartbeat: true
