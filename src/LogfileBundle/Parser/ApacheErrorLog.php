@@ -4,8 +4,8 @@ namespace LogfileBundle\Parser;
 
 class ApacheAccesslog implements iParser {
 
-    //private $hitsUnmatched = 0;
-    //private $hitsTotal = 0;
+    private $hitsUnmatched = 0;
+    private $hitsTotal = 0;
 
 
     public function __construct(){
@@ -14,12 +14,12 @@ class ApacheAccesslog implements iParser {
 
     public function parseLine($line){
 
-#       if(preg_match($this->line_regex, $line, $matched) != 1){
-#         print "FAILED to PARSE LINE: $line";
-#         $this->hits_unmatched++;
-#         return;
-#       }
-#
+       if(preg_match($this->line_regex, $line, $matched) != 1){
+         print "FAILED to PARSE LINE: $line";
+         $this->hits_unmatched++;
+         return;
+       }
+
        $this->hitsTotal++; 
     }
 

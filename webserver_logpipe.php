@@ -14,7 +14,6 @@ if(!$resolver->run()) :
     return;
 endif;
 
-// TODO: use buffered output
 ob_implicit_flush(true);
 
 $controller = new \MainBundle\Controller\MainController();
@@ -25,7 +24,7 @@ while(true) :
 
     if($stream->isEnd()) :
 
-        echo sprintf('(%s) END OF STREAM', date('Y-m-d H:i:s')); //@todo use logger
+        echo sprintf('(%s) END OF STREAM', date('Y-m-d H:i:s'));
         break;
     endif;
 

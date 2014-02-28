@@ -21,7 +21,7 @@ class StdIn {
 
         if($result === false) :
 
-            throw new Exception('stream_select failed');
+            throw new \Exception('stream_select failed');
         endif;
 
         if($result === 0) :

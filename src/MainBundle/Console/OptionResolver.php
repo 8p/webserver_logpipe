@@ -19,7 +19,6 @@ class OptionResolver {
     } // end: getOptions()
 
     /**
-     * @todo object oriented! creating Option class and GetOpt
      * @throws \Exception
      */
     public function run() {
@@ -112,7 +111,6 @@ class OptionResolver {
     /**
      * Help
      *
-     * @todo cleaner, a little bit cleaner :D
      * @param  array $options
      * @return string $output
      */

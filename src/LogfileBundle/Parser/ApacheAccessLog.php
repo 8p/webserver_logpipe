@@ -33,8 +33,6 @@ class ApacheAccessLog implements iParser {
             $this->hitsTimeTotal += $matched["exectime"];
         endif;
 
-        //print_r($matched);
-
         if(preg_match($this->lineRegExStatic, $matched["url"]) == 1) :
 
             $this->hitsStatic++;

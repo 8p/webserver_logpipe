@@ -17,10 +17,6 @@ class Logger {
 
             fwrite(STDERR, $message);
 
-            /*if($this->logfile_handle != NULL){
-
-                fwrite($this->logfile_handle,"webserver_logpipe: "+$text);
-            }*/
         endif;
     }
 }
