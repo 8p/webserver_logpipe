@@ -2,7 +2,7 @@
 
 namespace LogfileBundle\Parser;
 
-class ApacheAccessLog implements iParser {
+class ApacheAccessLog implements ParserInterface {
 
     private $hitsUnmatched  = 0;
     private $hitsTotal      = 0;

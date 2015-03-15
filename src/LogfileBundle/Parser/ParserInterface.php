@@ -2,11 +2,11 @@
 
 namespace LogfileBundle\Parser;
 
-interface iParser {
+interface ParserInterface {
 
     public function __construct();
 
     public function parseLine($line);
 
     public function getResults();
-} // end: iParser
+} // end: ParserInterface

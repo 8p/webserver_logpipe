@@ -2,7 +2,7 @@
 
 namespace ZabbixBundle\Monitoring;
 
-class ZabbixAdapter {
+class dZabbixAdapter {
 
     protected $server            = 'monitoring.domain.tld';
     protected $port              = 10051;
@@ -186,7 +186,7 @@ class ZabbixAdapter {
         /*
          * Socket
          */
-        $fp = @fsockopen($this->server, $this->port, $errno, $errstr, $this->timeoutConnection);
+        $fp = fsockopen($this->server, $this->port, $errno, $errstr, $this->timeoutConnection);
 
         if(!$fp) :
 

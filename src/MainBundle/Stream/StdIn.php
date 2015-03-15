@@ -38,6 +38,6 @@ class StdIn {
 
         $status = stream_get_meta_data(STDIN);
 
-        return ($status['eof'] == true) ? true : false;
+        return ($status['eof'] === true);
     } // end: isEnd()
 } // end: StdIn

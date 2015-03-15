@@ -54,6 +54,18 @@ class LogfileListener extends \MainBundle\Listener\BasicListener {
         $this->precicseRotation = $value;
     } // end: setPrecicseRotation()
 
+
+
+	/**
+	 * Get precise rotation
+	 *
+	 * @return bool
+	 */
+	public function getPrecicseRotation() {
+
+		return $this->precicseRotation;
+	} // end: getPrecicseRotation()
+
     private function maintainSymlink($logfile_name){
 
         if($this->symlink === NULL) :
