@@ -2,7 +2,7 @@
 
 namespace ZabbixBundle\Monitoring;
 
-class dZabbixAdapter {
+class ZabbixAdapter {
 
     protected $server            = 'monitoring.domain.tld';
     protected $port              = 10051;
