@@ -84,7 +84,7 @@ Licence and Authors
 
 Additional authors are very welcome - just submit your patches as pull requests.
 
- * Florian Preusner <florian@preusner.de>
+ * Florian Preusner <github@florian.mail.preusner.de>
  * Marc Schoechlin <ms-github@256bit.org>
 
 License - see: LICENSE
